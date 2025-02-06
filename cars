@@ -2,65 +2,64 @@ import java.util.Scanner;
 
 public class Main {
 
-    private String carMake;  // The brand of the car
-    private String carModel; // The model of the car
-    private boolean isAvailable; // Whether the car is available to rent
+    private String carMake;  // Brand of the vehicle
+    private String carModel; // Specific model name
+    private boolean isAvailable; // Status of availability
 
-    // Constructor to initialize a new car
+    // Constructor to initialize car details
     public Main(String carMake, String carModel) {
         this.carMake = carMake;
         this.carModel = carModel;
-        this.isAvailable = true;  // Initially, the car is available
+        this.isAvailable = true;  // All cars start as available
     }
 
-    // Method to check the availability of the car
-    public void checkCarAvailability() {
+    // Method to display the car's availability
+    public void showAvailability() {
         if (isAvailable) {
-            System.out.println(carMake + " " + carModel + " is available.");
+            System.out.println("Great news! " + carMake + " " + carModel + " is ready for rent.");
         } else {
-            System.out.println(carMake + " " + carModel + " is not available.");
+            System.out.println("Sorry, " + carMake + " " + carModel + " is currently rented out.");
         }
     }
 
-    // Method to rent the car
+    // Method to handle car rental process
     public void rentCar() {
         if (isAvailable) {
-            isAvailable = false;  // Mark the car as rented
-            System.out.println("You have rented the " + carMake + " " + carModel + ".");
+            isAvailable = false;  // Mark car as rented
+            System.out.println("Congratulations! You have successfully rented the " + carMake + " " + carModel + ".");
         } else {
-            System.out.println("Sorry, the " + carMake + " " + carModel + " is already rented.");
+            System.out.println("Apologies, the " + carMake + " " + carModel + " is not available right now.");
         }
     }
 
-    // Method to return the car
+    // Method to process car return
     public void returnCar() {
         if (!isAvailable) {
-            isAvailable = true;  // Mark the car as available again
-            System.out.println("You have successfully returned the " + carMake + " " + carModel + ".");
+            isAvailable = true;  // Mark car as available again
+            System.out.println("Thank you for returning the " + carMake + " " + carModel + ". We hope you had a great drive!");
         } else {
-            System.out.println("The " + carMake + " " + carModel + " is already available.");
+            System.out.println("It looks like the " + carMake + " " + carModel + " was never rented.");
         }
     }
 
-    // Main method to simulate the rental and return process
+    // Main method to simulate the rental process
     public static void main(String[] args) {
-        Scanner inputScanner = new Scanner(System.in);  // Scanner to get user input
+        Scanner inputScanner = new Scanner(System.in);  // Scanner for user input
 
-        // Create car objects for different models
+        // Create car objects
         Main nissan = new Main("Nissan", "Altima");
         Main prado = new Main("Toyota", "Prado");
         Main vitz = new Main("Toyota", "Vitz");
 
-
-        // Prompt customer for their name
-        System.out.print("\nEnter your name: ");
+        // Get the customer's name
+        System.out.print("\nWelcome to the Car Rental Service! Please enter your name: ");
         String customerName = inputScanner.nextLine();
 
-        // Ask the customer which car they want to rent
-        System.out.print("\nHello, " + customerName + ". Which car would you like to rent? (Nissan, Prado, Vitz): ");
+        // Ask the user which car they want to rent
+        System.out.print("\nHello, " + customerName + "! Which vehicle would you like to rent? (Nissan, Prado, Vitz): ");
         String carToRent = inputScanner.nextLine();
 
-        // Rent the car based on the customer's choice
+        // Rent the chosen car
         boolean rentedCar = false;
         switch (carToRent.toLowerCase()) {
             case "nissan":
@@ -68,7 +67,7 @@ public class Main {
                     nissan.rentCar();
                     rentedCar = true;
                 } else {
-                    System.out.println("Sorry, the Nissan Altima is not available.");
+                    System.out.println("Sorry, the Nissan Altima is already booked.");
                 }
                 break;
             case "prado":
@@ -76,7 +75,7 @@ public class Main {
                     prado.rentCar();
                     rentedCar = true;
                 } else {
-                    System.out.println("Sorry, the Toyota Prado is not available.");
+                    System.out.println("Sorry, the Toyota Prado is already booked.");
                 }
                 break;
             case "vitz":
@@ -84,23 +83,23 @@ public class Main {
                     vitz.rentCar();
                     rentedCar = true;
                 } else {
-                    System.out.println("Sorry, the Toyota Vitz is not available.");
+                    System.out.println("Sorry, the Toyota Vitz is already booked.");
                 }
                 break;
             default:
-                System.out.println("Invalid car name entered.");
+                System.out.println("Oops! That vehicle is not in our inventory.");
         }
 
         if (!rentedCar) {
-            System.out.println("\nPlease select a valid car or one that is available.");
+            System.out.println("\nPlease choose an available vehicle from our list.");
             return;
         }
 
-        // After renting, prompt the customer for the car return
-        System.out.print("\nWhich car are you returning? (Nissan, Prado, Vitz): ");
+        // Ask the user to return the car
+        System.out.print("\nWhich vehicle are you returning? (Nissan, Prado, Vitz): ");
         String carToReturn = inputScanner.nextLine();
 
-        // Handle the return process based on the input
+        // Process the return based on user input
         switch (carToReturn.toLowerCase()) {
             case "nissan":
                 nissan.returnCar();
@@ -112,16 +111,16 @@ public class Main {
                 vitz.returnCar();
                 break;
             default:
-                System.out.println("Invalid car name entered.");
+                System.out.println("Invalid choice! Please ensure you are returning a vehicle from our fleet.");
         }
 
-        // Display the availability of all cars after the return
-        System.out.println("\nAvailable cars after return:");
-        nissan.checkCarAvailability();
-        prado.checkCarAvailability();
-        vitz.checkCarAvailability();
+        // Display updated availability status
+        System.out.println("\nUpdated availability of our vehicles:");
+        nissan.showAvailability();
+        prado.showAvailability();
+        vitz.showAvailability();
 
-        // Close the scanner to avoid resource leak
+        // Close scanner
         inputScanner.close();
     }
 }
