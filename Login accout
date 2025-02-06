@@ -1,0 +1,52 @@
+import java.io.Console;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+
+        // Step 1: User sets their username and password
+        System.out.print("Set your username: ");
+        String savedUser = console.nextLine();
+
+        System.out.print("Set your password: ");
+        String savedPass = readPassword(); // Password input with masking
+
+        System.out.println("\nAccount created successfully!\n");
+
+        // Step 2: Login process
+        int attempts = 3; // Allow 3 attempts
+
+        while (attempts > 0) {
+            System.out.print("Enter username: ");
+            String user = console.nextLine();
+
+            System.out.print("Enter password: ");
+            String pass = readPassword(); // Password input with masking
+
+            if (user.equals(savedUser) && pass.equals(savedPass)) {
+                System.out.println("\nWelcome back, " + user + "!");
+                break;
+            } else {
+                attempts--;
+                System.out.println("\nWrong username or password! You have " + attempts + " attempt(s) left.");
+
+                if (attempts == 0) {
+                    System.out.println("You have been locked out due to too many failed attempts.");
+                }
+            }
+        }
+    }
+
+    // Function to read password while displaying '*' in real-time
+    public static String readPassword() {
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("No console available!");
+            System.exit(1);
+        }
+
+        char[] passwordArray = console.readPassword();
+        return new String(passwordArray);
+    }
+}
